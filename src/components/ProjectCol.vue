@@ -4,14 +4,14 @@
       <div class="tt-project-col-container">
         <div class="tt-project-col-title">
           {{ proj.data.project }}
-          <button @click="show(proj.ID)" class="project-del btn cyan">
+          <button @click="delShow(proj.ID)" class="project-del btn cyan">
             <i class="fas fa-times"></i>
           </button>
-          <modal name="my-first-modal" class="modalBG">
+          <modal name="delete-modal" class="modalBG">
             <div class="deleteModalContent">
               <h5>Are you sure you want to delete this Project?</h5>
               <button @click="deleteCol(storeID)" class="btn-large cyan">Yes</button>
-              <button @click="hide" class="btn-large red">No</button>
+              <button @click="delHide" class="btn-large red">No</button>
             </div>
           </modal>
         </div>
@@ -20,10 +20,20 @@
     </span>
 
     <span class="tt-addProject">
-      <button class="btn cyan add-btn mr-3">
+      <button @click="addShow" class="btn cyan add-btn mr-3">
         <i class="fas fa-plus"></i>
       </button>
     </span>
+    <modal name="add-modal">
+      <div class="addProjectContent">
+        <h5>Add new Project</h5>
+        <form>
+          <input name="projectName" type="text" placeholder="Project Name" />
+          <input type="button" value="Add Project" class="btn-large cyan addBTN" />
+        </form>
+        <button @click="addHide" class="btn-large red cancelBTN">Cancel</button>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -43,22 +53,28 @@ export default {
     deleteCol(id) {
       this.deleteProject(id);
       this.fetchProjects();
-      this.hide();
+      this.delHide();
     },
     // addNewProject() {
     //   this.addProject(projObj);
     //   this.fetchProjects();
     // },
 
-    show(id) {
-      this.$modal.show("my-first-modal");
+    delShow(id) {
+      this.$modal.show("delete-modal");
 
       this.storeID = id;
     },
-    hide() {
-      this.$modal.hide("my-first-modal");
+    delHide() {
+      this.$modal.hide("delete-modal");
 
       this.storeID = null;
+    },
+    addShow(id) {
+      this.$modal.show("add-modal");
+    },
+    addHide() {
+      this.$modal.hide("add-modal");
     },
   },
 };
@@ -105,9 +121,6 @@ export default {
 
 .tt-project-col-teamlist {
   width: 95%;
-  /*Delete when cards added */
-  height: 80%;
-  /*Delete when cards added */
   margin-top: 20px;
   margin-left: 2.5%;
   overflow-y: scroll;
@@ -133,5 +146,18 @@ export default {
 
 .deleteModalContent {
   margin-top: 10%;
+}
+
+.addProjectContent {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10%;
+}
+.cancelBTN {
+  float: right;
+}
+
+.addBTN {
+  float: left;
 }
 </style>

@@ -1,19 +1,26 @@
 <template>
   <div class="tt-project-section">
-    <span v-for="(data, index) in projData" :key="index" class="tt-project-col">
+    <span v-for="(proj, index) in projData" :key="index" class="tt-project-col">
       <div class="tt-project-col-container">
         <div class="tt-project-col-title">
-          {{data.project}}
-          <button class="project-del btn cyan">
+          {{ proj.data.project }}
+          <button @click="show(proj.ID)" class="project-del btn cyan">
             <i class="fas fa-times"></i>
           </button>
+          <modal name="my-first-modal" class="modalBG">
+            <div class="deleteModalContent">
+              <h5>Are you sure you want to delete this Project?</h5>
+              <button @click="deleteCol(storeID)" class="btn-large cyan">Yes</button>
+              <button @click="hide" class="btn-large red">No</button>
+            </div>
+          </modal>
         </div>
         <div class="tt-project-col-teamlist"></div>
       </div>
     </span>
 
     <span class="tt-addProject">
-      <button class="btn cyan add-btn">
+      <button class="btn cyan add-btn mr-3">
         <i class="fas fa-plus"></i>
       </button>
     </span>
@@ -21,9 +28,39 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "ProjectCol",
+  data() {
+    return {
+      storeID: null,
+    };
+  },
   props: ["projData"],
+  methods: {
+    ...mapActions(["fetchProjects", "deleteProject", "addProject"]),
+    deleteCol(id) {
+      this.deleteProject(id);
+      this.fetchProjects();
+      this.hide();
+    },
+    // addNewProject() {
+    //   this.addProject(projObj);
+    //   this.fetchProjects();
+    // },
+
+    show(id) {
+      this.$modal.show("my-first-modal");
+
+      this.storeID = id;
+    },
+    hide() {
+      this.$modal.hide("my-first-modal");
+
+      this.storeID = null;
+    },
+  },
 };
 </script>
 
@@ -33,13 +70,15 @@ export default {
 }
 
 .tt-project-col {
-  width: 600px;
+  width: 40%;
   height: 100%;
   border-right: solid #d1d1d1;
   border-left: solid #d1d1d1;
   background: white;
   display: inline-block;
   margin-right: -4px;
+  white-space: nowrap;
+  vertical-align: top;
 }
 
 .tt-project-col-container {
@@ -86,5 +125,13 @@ export default {
   position: relative;
   margin-bottom: 1300px;
   margin-left: 40px;
+}
+
+.modalBG {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.deleteModalContent {
+  margin-top: 10%;
 }
 </style>

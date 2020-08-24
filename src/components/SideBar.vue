@@ -31,7 +31,7 @@ export default {
 .team-list-sidebar {
   margin: 0 auto;
   width: 90%;
-  height: 600px;
+  height: 70%;
   background: #4dd0e1;
   overflow-y: scroll;
 }

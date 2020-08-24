@@ -32,7 +32,7 @@ export default {
 .tt-project-field {
   float: left;
   height: 80vh;
-  width: 1500px;
+  width: 75%;
   margin-top: 10px;
   margin-left: 10px;
   background: url("../assets/images/BGfield.png") no-repeat;

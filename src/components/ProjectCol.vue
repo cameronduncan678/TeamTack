@@ -1,5 +1,6 @@
 <template>
   <div class="tt-project-section">
+    <!--Project Column-->
     <span v-for="(proj, index) in projData" :key="index" class="tt-project-col">
       <div class="tt-project-col-container">
         <div class="tt-project-col-title">
@@ -18,18 +19,31 @@
         <div class="tt-project-col-teamlist"></div>
       </div>
     </span>
-
+    <!--Add Project Button-->
     <span class="tt-addProject">
       <button @click="addShow" class="btn cyan add-btn mr-3">
         <i class="fas fa-plus"></i>
       </button>
     </span>
-    <modal name="add-modal">
+    <!--Add Project Modal-->
+    <modal class="modalBG" name="add-modal">
       <div class="addProjectContent">
         <h5>Add new Project</h5>
         <form>
-          <input name="projectName" type="text" placeholder="Project Name" />
-          <input type="button" value="Add Project" class="btn-large cyan addBTN" />
+          <input
+            id="project-name-input"
+            name="projectName"
+            type="text"
+            placeholder="Project Name"
+            v-model="projectName"
+            required
+          />
+          <input
+            @click="addNewProject"
+            type="submit"
+            value="Add Project"
+            class="btn-large cyan addBTN"
+          />
         </form>
         <button @click="addHide" class="btn-large red cancelBTN">Cancel</button>
       </div>
@@ -45,6 +59,7 @@ export default {
   data() {
     return {
       storeID: null,
+      projectName: null,
     };
   },
   props: ["projData"],
@@ -55,10 +70,17 @@ export default {
       this.fetchProjects();
       this.delHide();
     },
-    // addNewProject() {
-    //   this.addProject(projObj);
-    //   this.fetchProjects();
-    // },
+    addNewProject(e) {
+      e.preventDefault();
+
+      if (this.projectName) {
+        const newProj = this.projectName;
+        this.addProject({
+          project: newProj,
+        });
+        this.addHide();
+      }
+    },
 
     delShow(id) {
       this.$modal.show("delete-modal");
@@ -70,11 +92,13 @@ export default {
 
       this.storeID = null;
     },
-    addShow(id) {
+    addShow() {
       this.$modal.show("add-modal");
     },
     addHide() {
       this.$modal.hide("add-modal");
+
+      this.projectName = null;
     },
   },
 };

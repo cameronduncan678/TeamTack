@@ -57,7 +57,7 @@ export default new Vuex.Store({
         console.error(err);
       }
 
-      commit();
+      commit("emptyCommit");
     }
   }
 });

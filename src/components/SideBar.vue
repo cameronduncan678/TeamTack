@@ -2,19 +2,24 @@
   <div class="tt-sidebar cyan lighten-4">
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
-      <CardSidebar />
-      <CardSidebar />
+      <div v-for="(member, index) in getTeam" :key="index">
+        <CardSidebar :memberData="member" v-if="member.project == null" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import CardSidebar from "./TeamCardSB";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SideBar",
   components: {
     CardSidebar,
+  },
+  computed: {
+    ...mapGetters(["getTeam"]),
   },
 };
 </script>

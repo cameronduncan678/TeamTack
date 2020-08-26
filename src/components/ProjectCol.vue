@@ -17,9 +17,9 @@
           </modal>
         </div>
         <div class="tt-project-col-teamlist">
-          <TeamCardMain />
-          <TeamCardMain />
-          <TeamCardMain />
+          <div v-for="(member, index) in getTeam" :key="index">
+            <TeamCardMain v-if="member.project == proj.data.project" :memberData="member" />
+          </div>
         </div>
       </div>
     </span>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import TeamCardMain from "./TeamCardMain";
 
 export default {
@@ -71,6 +71,9 @@ export default {
     };
   },
   props: ["projData"],
+  computed: {
+    ...mapGetters(["getTeam"]),
+  },
   methods: {
     ...mapActions(["fetchProjects", "deleteProject", "addProject"]),
     deleteCol(id) {

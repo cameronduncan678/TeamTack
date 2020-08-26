@@ -2,10 +2,15 @@
   <div>
     <div class="tt-TeamCard-Main cyan lighten-5">
       <div class="tt-TeamCard-Main-port">
-        <img class="tt-TeamCard-Main-port-img" src="../assets/images/portraitTest01.jpeg" />
+        <img class="tt-TeamCard-Main-port-img" v-bind:src="memberData.photo" />
       </div>
       <div class="tt-TeamCard-Main-det">
-        <p class="detail-name">John Doe</p>
+        <p class="detail-name">
+          {{memberData.name}}
+          <button @click="show" class="main-card-del btn cyan">
+            <i class="fas fa-times"></i>
+          </button>
+        </p>
         <div class="detail-icons">
           <div class="detail-icons-icon">
             <i class="far fa-envelope"></i>
@@ -15,12 +20,31 @@
         <div class="detail-footer"></div>
       </div>
     </div>
+
+    <modal name="deleteTeamMain">
+      <div class="deleteModalContent center-align">
+        <h5>Are you sure you want to delete: {{memberData.name}}?</h5>
+        <div class="center-align">
+          <button class="btn-large cyan">Yes</button>
+          <button @click="hide" class="btn-large red">No</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 export default {
   name: "TeamCardMain",
+  props: ["memberData"],
+  methods: {
+    show() {
+      this.$modal.show("deleteTeamMain");
+    },
+    hide() {
+      this.$modal.hide("deleteTeamMain");
+    },
+  },
 };
 </script>
 
@@ -57,8 +81,7 @@ export default {
   margin: 0 10px;
   font-size: 25px;
   border-top: solid 1px;
-  border-bottom: solid 1px;
-  font-weight: 10;
+  padding-top: 10px;
 }
 
 .detail-icons {
@@ -79,5 +102,9 @@ export default {
 .detail-footer {
   border-top: solid 1px;
   margin: 0 10px;
+}
+
+.main-card-del {
+  float: right;
 }
 </style>

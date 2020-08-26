@@ -7,25 +7,19 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
-import SideBar from '@/components/SideBar'
-import Main from '@/components/Main'
+import Header from "@/components/Header";
+import SideBar from "@/components/SideBar";
+import Main from "@/components/Main";
 
 export default {
-  name: 'TeamTack',
-  data () {
-    return {
-      
-    }
-  },
-  components:{
+  name: "TeamTack",
+  components: {
     Header,
     SideBar,
-    Main
-  }
-}
+    Main,
+  },
+};
 </script>
 
 <style>
-
 </style>

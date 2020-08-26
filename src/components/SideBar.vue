@@ -1,13 +1,21 @@
 <template>
   <div class="tt-sidebar cyan lighten-4">
     <h4 class="sidebar-title">Team</h4>
-    <div class="team-list-sidebar"></div>
+    <div class="team-list-sidebar">
+      <CardSidebar />
+      <CardSidebar />
+    </div>
   </div>
 </template>
 
 <script>
+import CardSidebar from "./TeamCardSB";
+
 export default {
   name: "SideBar",
+  components: {
+    CardSidebar,
+  },
 };
 </script>
 

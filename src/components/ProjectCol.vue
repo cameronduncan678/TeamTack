@@ -16,7 +16,11 @@
             </div>
           </modal>
         </div>
-        <div class="tt-project-col-teamlist"></div>
+        <div class="tt-project-col-teamlist">
+          <TeamCardMain />
+          <TeamCardMain />
+          <TeamCardMain />
+        </div>
       </div>
     </span>
     <!--Add Project Button-->
@@ -53,9 +57,13 @@
 
 <script>
 import { mapActions } from "vuex";
+import TeamCardMain from "./TeamCardMain";
 
 export default {
   name: "ProjectCol",
+  components: {
+    TeamCardMain,
+  },
   data() {
     return {
       storeID: null,
@@ -145,6 +153,7 @@ export default {
 
 .tt-project-col-teamlist {
   width: 95%;
+  height: 75%;
   margin-top: 20px;
   margin-left: 2.5%;
   overflow-y: scroll;

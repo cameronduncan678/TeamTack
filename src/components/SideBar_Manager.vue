@@ -3,25 +3,25 @@
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
       <div v-for="(member, index) in getTeam" :key="index">
-        <CardSidebar :memberData="member" v-if="member.project == null" />
+        <CardSidebarMan :memberData="member" v-if="member.project == null" />
       </div>
     </div>
     <div class="team-manager-btn">
       <button class="btn cyan">
-        <i class="fas fa-users-cog"></i>
+        <i class="fas fa-backspace"></i>
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import CardSidebar from "./TeamCardSB";
+import CardSidebarMan from "./TeamCardSBMan";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "SideBar",
+  name: "SideBarManager",
   components: {
-    CardSidebar,
+    CardSidebarMan,
   },
   computed: {
     ...mapGetters(["getTeam"]),

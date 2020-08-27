@@ -2,9 +2,8 @@
   <div class="Card-SideBar cyan lighten-5">
     <div class="card-sidebar-content">
       <img class="card-sidebar-photo" v-bind:src="memberData.photo" />
-      <div class="card-sidebar-icons">
-        <i class="far fa-envelope"></i>
-        <i class="fas fa-phone-alt"></i>
+      <div class="card-Manager-icons">
+        <i class="fas fa-cog"></i>
       </div>
     </div>
   </div>
@@ -12,7 +11,7 @@
 
 <script>
 export default {
-  name: "CardSidebar",
+  name: "CardSidebarMan",
   props: ["memberData"],
 };
 </script>
@@ -42,12 +41,12 @@ export default {
   float: left;
 }
 
-.card-sidebar-icons {
+.card-Manager-icons {
   float: left;
-  font-size: 150%;
+  font-size: 300%;
 }
 
-.card-sidebar-icons i {
+.card-Manager-icons i {
   padding: 25%;
   display: block;
   cursor: pointer;

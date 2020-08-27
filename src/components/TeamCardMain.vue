@@ -5,12 +5,7 @@
         <img class="tt-TeamCard-Main-port-img" v-bind:src="memberData.photo" />
       </div>
       <div class="tt-TeamCard-Main-det">
-        <p class="detail-name">
-          {{memberData.name}}
-          <button @click="show" class="main-card-del btn cyan">
-            <i class="fas fa-times"></i>
-          </button>
-        </p>
+        <p class="detail-name">{{memberData.name}}</p>
         <div class="detail-icons">
           <div class="detail-icons-icon">
             <i class="far fa-envelope"></i>
@@ -20,16 +15,6 @@
         <div class="detail-footer"></div>
       </div>
     </div>
-
-    <modal name="deleteTeamMain">
-      <div class="deleteModalContent center-align">
-        <h5>Are you sure you want to delete: {{memberData.name}}?</h5>
-        <div class="center-align">
-          <button class="btn-large cyan">Yes</button>
-          <button @click="hide" class="btn-large red">No</button>
-        </div>
-      </div>
-    </modal>
   </div>
 </template>
 
@@ -51,7 +36,7 @@ export default {
 <style>
 .tt-TeamCard-Main {
   width: 95%;
-  height: 250px;
+  height: 150px;
   margin-bottom: 50px;
   box-shadow: 5px 5px 9px #d9e2e4;
 }

@@ -21,7 +21,7 @@ export default new Vuex.Store({
         name: "Jane Doe",
         email: "jane@Doe.com",
         phone: "09123673813",
-        project: "!DO NOT DELETE!",
+        project: null,
         photo:
           "https://i.pinimg.com/originals/67/5f/40/675f409cfcbea9281f6649ca096caf25.jpg"
       },
@@ -29,7 +29,7 @@ export default new Vuex.Store({
         name: "Brabara McDougal",
         email: "bard@workemail.com",
         phone: "0989213456",
-        project: "!DO NOT DELETE!",
+        project: null,
         photo:
           "https://www.epicscotland.com/wp-content/uploads/2019/09/Business-Headshot-Women-015.jpg"
       },
@@ -37,7 +37,7 @@ export default new Vuex.Store({
         name: "Elizabeth Elysie",
         email: "elizabeth@workemail.com",
         phone: "0666981134",
-        project: "Test Proj",
+        project: null,
         photo:
           "https://www.glamourshots.com/wp-content/uploads/2015/08/Business_Women_Head_Shot-799x600.jpg"
       }

@@ -7,9 +7,9 @@
       </div>
     </div>
     <div class="team-manager-btn">
-      <button class="btn cyan">
+      <router-link to="/" class="btn cyan">
         <i class="fas fa-backspace"></i>
-      </button>
+      </router-link>
     </div>
   </div>
 </template>

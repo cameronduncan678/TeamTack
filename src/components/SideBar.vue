@@ -5,11 +5,16 @@
       <div v-for="(member, index) in getTeam" :key="index">
         <CardSidebar :memberData="member" v-if="member.project == null" />
       </div>
+      <div class="add-member-btn">
+        <button class="btn cyan">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
     </div>
     <div class="team-manager-btn">
-      <button class="btn cyan">
+      <router-link to="/teammanager" class="btn cyan">
         <i class="fas fa-users-cog"></i>
-      </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -91,5 +96,15 @@ export default {
 
 .team-manager-btn button {
   width: 30%;
+}
+
+.add-member-btn {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.add-member-btn button {
+  width: 30%;
+  height: 60px;
 }
 </style>

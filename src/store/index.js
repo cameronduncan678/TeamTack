@@ -5,59 +5,56 @@ const db = require("../../firebase/db");
 
 Vue.use(Vuex);
 
+const projectsCollection = "teamTackProjects";
+const membersCollection = "teamTackMembers";
+
 export default new Vuex.Store({
   state: {
     projects: [],
-    teamMembers: [
-      {
-        name: "John Doe",
-        email: "john@Doe.com",
-        phone: "012324812222",
-        project: null,
-        photo:
-          "https://www.neilsonreeves.co.uk/wp-content/uploads/Corporate-Headshot-grey-background.jpg"
-      },
-      {
-        name: "Jane Doe",
-        email: "jane@Doe.com",
-        phone: "09123673813",
-        project: null,
-        photo:
-          "https://i.pinimg.com/originals/67/5f/40/675f409cfcbea9281f6649ca096caf25.jpg"
-      },
-      {
-        name: "Brabara McDougal",
-        email: "bard@workemail.com",
-        phone: "0989213456",
-        project: null,
-        photo:
-          "https://www.epicscotland.com/wp-content/uploads/2019/09/Business-Headshot-Women-015.jpg"
-      },
-      {
-        name: "Elizabeth Elysie",
-        email: "elizabeth@workemail.com",
-        phone: "0666981134",
-        project: null,
-        photo:
-          "https://www.glamourshots.com/wp-content/uploads/2015/08/Business_Women_Head_Shot-799x600.jpg"
-      }
-    ]
+    teamMembers: [],
+    placeholderIMG:
+      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
   },
   getters: {
     allProjects: state => state.projects,
-    getTeam: state => state.teamMembers
+    getTeam: state => state.teamMembers,
+    getPlaceholder: state => state.placeholderIMG
   },
   mutations: {
     storeProjects: (state, data) => {
       state.projects = data;
     },
+    storeMembers: (state, data) => {
+      state.teamMembers = data;
+    },
     emptyCommit: () => {}
   },
   actions: {
+    async fetchMembers({ commit }) {
+      try {
+        const data = await db
+          .collection(membersCollection)
+          .get()
+          .then(snapshot => {
+            var dataElements = [];
+            snapshot.docs.forEach(doc => {
+              dataElements.push({
+                ID: doc.id,
+                data: doc.data()
+              });
+            });
+            return dataElements;
+          });
+
+        commit("storeMembers", data);
+      } catch (err) {
+        console.error(err);
+      }
+    },
     async fetchProjects({ commit }) {
       try {
         const data = await db
-          .collection("teamTackProjects")
+          .collection(projectsCollection)
           .get()
           .then(snapshot => {
             var dataElements = [];
@@ -77,7 +74,7 @@ export default new Vuex.Store({
     },
     deleteProject({ commit }, id) {
       try {
-        db.collection("teamTackProjects")
+        db.collection(projectsCollection)
           .doc(id)
           .delete();
       } catch (err) {
@@ -87,7 +84,16 @@ export default new Vuex.Store({
     },
     addProject({ commit }, projObject) {
       try {
-        db.collection("teamTackProjects").add(projObject);
+        db.collection(projectsCollection).add(projObject);
+      } catch (err) {
+        console.error(err);
+      }
+
+      commit("emptyCommit");
+    },
+    addMember({ commit }, memberObject) {
+      try {
+        db.collection(membersCollection).add(memberObject);
       } catch (err) {
         console.error(err);
       }

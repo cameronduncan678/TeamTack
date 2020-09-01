@@ -2,10 +2,10 @@
   <div>
     <div class="tt-TeamCard-Main cyan lighten-5">
       <div class="tt-TeamCard-Main-port">
-        <img class="tt-TeamCard-Main-port-img" v-bind:src="memberData.photo" />
+        <img class="tt-TeamCard-Main-port-img" :src="checkImageURL()" />
       </div>
       <div class="tt-TeamCard-Main-det">
-        <p class="detail-name">{{memberData.name}}</p>
+        <p class="detail-name">{{fullName}}</p>
         <div class="detail-icons">
           <div class="detail-icons-icon">
             <i class="far fa-envelope"></i>
@@ -19,15 +19,36 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TeamCardMain",
   props: ["memberData"],
+  data() {
+    return {
+      fullName:
+        this.memberData.data.name.firstname +
+        " " +
+        this.memberData.data.name.lastname,
+    };
+  },
   methods: {
+    ...mapGetters(["getPlaceholder"]),
     show() {
       this.$modal.show("deleteTeamMain");
     },
     hide() {
       this.$modal.hide("deleteTeamMain");
+    },
+    checkImageURL() {
+      const imageURL = this.memberData.data.imageurl;
+      const placeholderIMG = this.getPlaceholder();
+
+      if (imageURL == "") {
+        return placeholderIMG;
+      } else {
+        return imageURL;
+      }
     },
   },
 };
@@ -36,7 +57,7 @@ export default {
 <style>
 .tt-TeamCard-Main {
   width: 95%;
-  height: 150px;
+  height: 200px;
   margin-bottom: 50px;
   box-shadow: 5px 5px 9px #d9e2e4;
 }

@@ -18,7 +18,7 @@
         </div>
         <div class="tt-project-col-teamlist">
           <div v-for="(member, index) in getTeam" :key="index">
-            <TeamCardMain v-if="member.project == proj.data.project" :memberData="member" />
+            <TeamCardMain v-if="member.data.project == proj.data.project" :memberData="member" />
           </div>
         </div>
       </div>

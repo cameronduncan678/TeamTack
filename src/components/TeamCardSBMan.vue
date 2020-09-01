@@ -1,7 +1,7 @@
 <template>
   <div class="Card-SideBar cyan lighten-5">
     <div class="card-sidebar-content">
-      <img class="card-sidebar-photo" v-bind:src="memberData.photo" />
+      <img class="card-sidebar-photo" v-bind:src="checkImageURL()" />
       <div class="card-Manager-icons">
         <i class="fas fa-cog"></i>
       </div>
@@ -10,9 +10,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "CardSidebarMan",
   props: ["memberData"],
+  methods: {
+    ...mapGetters(["getPlaceholder"]),
+    checkImageURL() {
+      const imageURL = this.memberData.data.imageurl;
+      const placeholderIMG = this.getPlaceholder();
+
+      if (imageURL == "") {
+        return placeholderIMG;
+      } else {
+        return imageURL;
+      }
+    },
+  },
 };
 </script>
 

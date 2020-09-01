@@ -3,7 +3,12 @@
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
       <div v-for="(member, index) in getTeam" :key="index">
-        <CardSidebarMan :memberData="member" v-if="member.project == null" />
+        <CardSidebarMan :memberData="member" />
+      </div>
+      <div class="add-member-btn">
+        <button @click="addMemberShow" class="btn cyan">
+          <i class="fas fa-plus"></i>
+        </button>
       </div>
     </div>
     <div class="team-manager-btn">
@@ -11,6 +16,36 @@
         <i class="fas fa-backspace"></i>
       </router-link>
     </div>
+    <modal id="add-member" name="add-member-modal" height="auto" class="modalBG">
+      <div class="container">
+        <h5 style="text-align:center; margin-top:40px;">Add new TeamMember</h5>
+        <form class="col">
+          <div>
+            <div class="input-field">
+              <input type="text" placeholder="First Name" />
+            </div>
+            <div class="input-field">
+              <input type="text" placeholder="Last Name" />
+            </div>
+          </div>
+          <div class>
+            <div class="input-field">
+              <input type="email" placeholder="email" />
+            </div>
+            <div class="input-field">
+              <input type="text" placeholder="phone" />
+            </div>
+            <div class="input-field">
+              <input type="upload" />
+            </div>
+          </div>
+        </form>
+        <div style="text-align:center; margin-bottom:40px; margin-top:20px;">
+          <button class="btn-large cyan">Add Member</button>
+          <button @click="addMemberHide" class="btn-large red">Cancel</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -22,6 +57,14 @@ export default {
   name: "SideBarManager",
   components: {
     CardSidebarMan,
+  },
+  methods: {
+    addMemberShow() {
+      this.$modal.show("add-member-modal");
+    },
+    addMemberHide() {
+      this.$modal.hide("add-member-modal");
+    },
   },
   computed: {
     ...mapGetters(["getTeam"]),

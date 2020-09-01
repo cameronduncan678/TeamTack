@@ -3,10 +3,10 @@
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
       <div v-for="(member, index) in getTeam" :key="index">
-        <CardSidebar :memberData="member" v-if="member.project == null" />
+        <CardSidebar :memberData="member" v-if="member.data.project == ''" />
       </div>
       <div class="add-member-btn">
-        <button class="btn cyan">
+        <button @click="addMemberShow" class="btn cyan">
           <i class="fas fa-plus"></i>
         </button>
       </div>
@@ -16,20 +16,81 @@
         <i class="fas fa-users-cog"></i>
       </router-link>
     </div>
+    <modal id="add-member" name="add-member-modal" height="auto" class="modalBG">
+      <div class="container">
+        <h5 style="text-align:center; margin-top:40px;">Add new TeamMember</h5>
+        <form class="col">
+          <div>
+            <div class="input-field">
+              <input type="text" placeholder="First Name" v-model="addFName" />
+            </div>
+            <div class="input-field">
+              <input type="text" placeholder="Last Name" v-model="addLName" />
+            </div>
+          </div>
+          <div class>
+            <div class="input-field">
+              <input type="email" placeholder="email" v-model="addEmail" />
+            </div>
+            <div class="input-field">
+              <input type="text" placeholder="phone" v-model="addPhone" />
+            </div>
+            <div class="input-field">
+              <input type="upload" />
+            </div>
+          </div>
+        </form>
+        <div style="text-align:center; margin-bottom:40px; margin-top:20px;">
+          <button @click="addNewTeamMember" class="btn-large cyan">Add Member</button>
+          <button @click="addMemberHide" class="btn-large red">Cancel</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 import CardSidebar from "./TeamCardSB";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SideBar",
   components: {
     CardSidebar,
   },
+  methods: {
+    ...mapActions(["fetchMembers", "addMember"]),
+    addMemberShow() {
+      this.$modal.show("add-member-modal");
+    },
+    addMemberHide() {
+      this.$modal.hide("add-member-modal");
+    },
+    addNewTeamMember(e) {
+      e.preventDefault;
+
+      if (this.addFName && this.addLName && this.addEmail && this.addPhone) {
+        this.addMember({
+          name: {
+            firstname: this.addFName,
+            lastname: this.addLName,
+          },
+          email: this.addEmail,
+          phone: this.addPhone,
+          imageurl: "",
+          project: "",
+        });
+      }
+    },
+  },
   computed: {
     ...mapGetters(["getTeam"]),
+  },
+  created() {
+    this.fetchMembers();
+  },
+  updated() {
+    this.fetchMembers();
   },
 };
 </script>
@@ -106,5 +167,6 @@ export default {
 .add-member-btn button {
   width: 30%;
   height: 60px;
+  margin-top: 5px;
 }
 </style>

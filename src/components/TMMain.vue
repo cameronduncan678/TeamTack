@@ -5,10 +5,7 @@
       <div class="row">
         <div class="col tm-photo-section">
           <div class="tm-photo">
-            <img
-              class="tm-photo-photo"
-              src="https://www.neilsonreeves.co.uk/wp-content/uploads/Corporate-Headshot-grey-background.jpg"
-            />
+            <img class="tm-photo-photo" :src="getMemberEdit.data.imageurl" />
             <div class="tm-photo-btn">
               <button class="btn">Upload Image</button>
             </div>
@@ -18,20 +15,32 @@
           <form class="col s12">
             <div class="row">
               <div class="input-field col s6 cyan">
-                <input type="text" placeholder="First Name" />
+                <input
+                  type="text"
+                  :placeholder="getMemberEdit.data.name.firstname"
+                  :value="getMemberEdit.data.name.firstname"
+                />
               </div>
               <div class="input-field col s6 cyan">
-                <input type="text" placeholder="Last Name" />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  :value="getMemberEdit.data.name.lastname"
+                />
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12 cyan">
-                <input type="email" placeholder="email@address.com" />
+                <input
+                  type="email"
+                  placeholder="email@address.com"
+                  :value="getMemberEdit.data.email"
+                />
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12 cyan">
-                <input type="text" placeholder="Phone Number" />
+                <input type="text" placeholder="Phone Number" :value="getMemberEdit.data.phone" />
               </div>
             </div>
           </form>
@@ -40,18 +49,51 @@
           <button class="tm-btn btn cyan">
             <i class="far fa-edit"></i>
           </button>
-          <button class="tm-btn btn red">
+          <button @click="memberDelShow" class="tm-btn btn red">
             <i class="far fa-minus-square"></i>
           </button>
         </div>
       </div>
     </div>
+    <modal name="delete-member-modal" class="modalBG">
+      <div class="deleteModalContent">
+        <h5>Are you sure you want to delete: {{getMemberEdit.data.name.firstname}}</h5>
+        <button @click="deleteCurrentMember(getMemberEdit.ID)" class="btn-large cyan">Yes</button>
+        <button @click="memberDelHide" class="btn-large red">No</button>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "TMMain",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["getMemberEdit"]),
+    ...mapActions(["fetchMembers"]),
+  },
+  methods: {
+    ...mapActions(["deleteMember"]),
+    memberDelShow() {
+      this.$modal.show("delete-member-modal");
+    },
+    memberDelHide() {
+      this.$modal.hide("delete-member-modal");
+    },
+    deleteCurrentMember(id) {
+      this.deleteMember(id);
+      this.fetchMembers();
+      this.memberDelHide();
+    },
+  },
+  updated() {
+    this.fetchMembers();
+  },
 };
 </script>
 

@@ -51,7 +51,7 @@
 
 <script>
 import CardSidebarMan from "./TeamCardSBMan";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SideBarManager",
@@ -68,6 +68,13 @@ export default {
   },
   computed: {
     ...mapGetters(["getTeam"]),
+    ...mapActions(["fetchMembers"]),
+  },
+  created() {
+    this.fetchMembers();
+  },
+  updated() {
+    this.fetchMembers();
   },
 };
 </script>

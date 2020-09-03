@@ -13,12 +13,26 @@ export default new Vuex.Store({
     projects: [],
     teamMembers: [],
     placeholderIMG:
-      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+    memberEdit: {
+      data: {
+        name: {
+          firstname: "Firstname",
+          lastname: "Lastname"
+        },
+        email: "email",
+        phone: "phone",
+        imageurl:
+          "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+        project: ""
+      }
+    }
   },
   getters: {
     allProjects: state => state.projects,
     getTeam: state => state.teamMembers,
-    getPlaceholder: state => state.placeholderIMG
+    getPlaceholder: state => state.placeholderIMG,
+    getMemberEdit: state => state.memberEdit
   },
   mutations: {
     storeProjects: (state, data) => {
@@ -27,9 +41,13 @@ export default new Vuex.Store({
     storeMembers: (state, data) => {
       state.teamMembers = data;
     },
+    storeMemberEdit: (state, data) => {
+      state.memberEdit = data;
+    },
     emptyCommit: () => {}
   },
   actions: {
+    //--- Fetch all teammember data in an Array
     async fetchMembers({ commit }) {
       try {
         const data = await db
@@ -51,6 +69,7 @@ export default new Vuex.Store({
         console.error(err);
       }
     },
+    //--- Fetch all Projects in an Array
     async fetchProjects({ commit }) {
       try {
         const data = await db
@@ -72,6 +91,11 @@ export default new Vuex.Store({
         console.error(err);
       }
     },
+    //---Fetch an individual Team member data
+    fetchMember({ commit }, data) {
+      commit("storeMemberEdit", data);
+    },
+    //--- Delete a project by doc id
     deleteProject({ commit }, id) {
       try {
         db.collection(projectsCollection)
@@ -82,6 +106,17 @@ export default new Vuex.Store({
       }
       commit("emptyCommit");
     },
+    deleteMember({ commit }, id) {
+      try {
+        db.collection(membersCollection)
+          .doc(id)
+          .delete();
+      } catch (err) {
+        console.error(err);
+      }
+      commit("emptyCommit");
+    },
+    //--- Add a new Project
     addProject({ commit }, projObject) {
       try {
         db.collection(projectsCollection).add(projObject);
@@ -91,6 +126,7 @@ export default new Vuex.Store({
 
       commit("emptyCommit");
     },
+    //--- Add a new teammember
     addMember({ commit }, memberObject) {
       try {
         db.collection(membersCollection).add(memberObject);

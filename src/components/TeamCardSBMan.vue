@@ -3,20 +3,21 @@
     <div class="card-sidebar-content">
       <img class="card-sidebar-photo" v-bind:src="checkImageURL()" />
       <div class="card-Manager-icons">
-        <i class="fas fa-cog"></i>
+        <i class="fas fa-cog" @click="storeMemberData(memberData)"></i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "CardSidebarMan",
   props: ["memberData"],
   methods: {
     ...mapGetters(["getPlaceholder"]),
+    ...mapActions(["fetchMember"]),
     checkImageURL() {
       const imageURL = this.memberData.data.imageurl;
       const placeholderIMG = this.getPlaceholder();
@@ -26,6 +27,9 @@ export default {
       } else {
         return imageURL;
       }
+    },
+    storeMemberData(data) {
+      this.fetchMember(data);
     },
   },
 };

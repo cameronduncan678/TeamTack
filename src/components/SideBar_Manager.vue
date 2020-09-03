@@ -22,18 +22,18 @@
         <form class="col">
           <div>
             <div class="input-field">
-              <input type="text" placeholder="First Name" />
+              <input type="text" placeholder="First Name" v-model="addFName" />
             </div>
             <div class="input-field">
-              <input type="text" placeholder="Last Name" />
+              <input type="text" placeholder="Last Name" v-model="addLName" />
             </div>
           </div>
           <div class>
             <div class="input-field">
-              <input type="email" placeholder="email" />
+              <input type="email" placeholder="email" v-model="addEmail" />
             </div>
             <div class="input-field">
-              <input type="text" placeholder="phone" />
+              <input type="text" placeholder="phone" v-model="addPhone" />
             </div>
             <div class="input-field">
               <input type="upload" />
@@ -41,7 +41,7 @@
           </div>
         </form>
         <div style="text-align:center; margin-bottom:40px; margin-top:20px;">
-          <button class="btn-large cyan">Add Member</button>
+          <button @click="addNewTeamMember" class="btn-large cyan">Add Member</button>
           <button @click="addMemberHide" class="btn-large red">Cancel</button>
         </div>
       </div>
@@ -59,16 +59,34 @@ export default {
     CardSidebarMan,
   },
   methods: {
+    ...mapActions(["fetchMembers", "addMember"]),
     addMemberShow() {
       this.$modal.show("add-member-modal");
     },
     addMemberHide() {
       this.$modal.hide("add-member-modal");
     },
+    addNewTeamMember(e) {
+      e.preventDefault;
+
+      if (this.addFName && this.addLName && this.addEmail && this.addPhone) {
+        this.addMember({
+          name: {
+            firstname: this.addFName,
+            lastname: this.addLName,
+          },
+          email: this.addEmail,
+          phone: this.addPhone,
+          imageurl: "",
+          project: "",
+        });
+      }
+
+      this.addMemberHide();
+    },
   },
   computed: {
     ...mapGetters(["getTeam"]),
-    ...mapActions(["fetchMembers"]),
   },
   created() {
     this.fetchMembers();

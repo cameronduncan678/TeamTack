@@ -81,6 +81,8 @@ export default {
           project: "",
         });
       }
+
+      this.addMemberHide();
     },
   },
   computed: {

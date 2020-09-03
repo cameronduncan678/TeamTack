@@ -75,10 +75,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getMemberEdit"]),
-    ...mapActions(["fetchMembers"]),
   },
   methods: {
-    ...mapActions(["deleteMember"]),
+    ...mapActions(["deleteMember", "fetchMembers"]),
     memberDelShow() {
       this.$modal.show("delete-member-modal");
     },
@@ -88,11 +87,9 @@ export default {
     deleteCurrentMember(id) {
       this.deleteMember(id);
       this.fetchMembers();
+
       this.memberDelHide();
     },
-  },
-  updated() {
-    this.fetchMembers();
   },
 };
 </script>

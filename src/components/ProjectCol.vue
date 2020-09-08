@@ -1,24 +1,27 @@
 <template>
   <div class="tt-project-section">
     <!--Project Column-->
-    <span v-for="(proj, index) in projData" :key="index" class="tt-project-col">
+    <span v-for="(proj, index) in filterData" :key="index" class="tt-project-col">
       <div class="tt-project-col-container">
         <div class="tt-project-col-title">
-          {{ proj.data.project }}
-          <button @click="delShow(proj.ID)" class="project-del btn cyan">
+          {{ proj.projectDoc.data.project }}
+          <button
+            @click="delShow(proj.projectDoc.ID, proj.teamMembers)"
+            class="project-del btn cyan"
+          >
             <i class="fas fa-times"></i>
           </button>
           <modal name="delete-modal" class="modalBG">
             <div class="deleteModalContent">
               <h5>Are you sure you want to delete this Project?</h5>
-              <button @click="deleteCol(storeID)" class="btn-large cyan">Yes</button>
+              <button @click="deleteCol(storeID, storeTeamMembers)" class="btn-large cyan">Yes</button>
               <button @click="delHide" class="btn-large red">No</button>
             </div>
           </modal>
         </div>
         <div class="tt-project-col-teamlist">
-          <div v-for="(member, index) in getTeam" :key="index">
-            <TeamCardMain v-if="member.data.project == proj.data.project" :memberData="member" />
+          <div v-for="(member, index) in proj.teamMembers" :key="index">
+            <TeamCardMain :memberData="member" />
           </div>
         </div>
       </div>
@@ -67,17 +70,48 @@ export default {
   data() {
     return {
       storeID: null,
+      storeTeamMembers: null,
       projectName: null,
     };
   },
   props: ["projData"],
   computed: {
     ...mapGetters(["getTeam"]),
+    /* Filter the projects and members data and return an array that compiles them together */
+    filterData() {
+      var projects = this.projData;
+      var team = this.getTeam;
+
+      var DataModelArray = [];
+      projects.forEach((proj) => {
+        var DataModel = { projectDoc: null, teamMembers: [] };
+
+        var arr = [];
+        team.forEach((member) => {
+          if (member.data.project != "") {
+            if (member.data.project == proj.data.project) {
+              arr.push(member);
+            }
+          }
+        });
+        DataModel.projectDoc = proj;
+        DataModel.teamMembers = arr;
+        DataModelArray.push(DataModel);
+      });
+      return DataModelArray;
+    },
   },
   methods: {
-    ...mapActions(["fetchProjects", "deleteProject", "addProject"]),
-    deleteCol(id) {
+    ...mapActions([
+      "fetchProjects",
+      "deleteProject",
+      "addProject",
+      "editMember",
+    ]),
+    deleteCol(id, membersArr) {
+      this.revertMembersToNull(membersArr);
       this.deleteProject(id);
+
       this.fetchProjects();
       this.delHide();
     },
@@ -92,11 +126,20 @@ export default {
         this.addHide();
       }
     },
+    revertMembersToNull(membersArr) {
+      membersArr.forEach((member) => {
+        member.data.project = "";
 
-    delShow(id) {
+        var parameterArray = [member.ID, member.data];
+        this.editMember(parameterArray);
+      });
+    },
+
+    delShow(id, membersArr) {
       this.$modal.show("delete-modal");
 
       this.storeID = id;
+      this.storeTeamMembers = membersArr;
     },
     delHide() {
       this.$modal.hide("delete-modal");

@@ -10,30 +10,14 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Main",
+  data() {
+    return {};
+  },
   methods: {
     ...mapActions(["fetchProjects"]),
   },
   computed: {
     ...mapGetters(["allProjects", "getTeam"]),
-    filterData() {
-      var projects = this.allProjects();
-      var team = this.getTeam();
-
-      var DataModel = { projectDoc: null, teamMembers: [] };
-      var DataModelArray = [];
-
-      projects.forEach((proj) => {
-        DataModel.projectDoc = proj;
-
-        team.forEach((member) => {
-          if (member.data.project == proj.data.project) {
-            DataModel.teamMembers.push(member);
-          }
-        });
-      });
-
-      return DataModelArray;
-    },
   },
   created() {
     this.fetchProjects();

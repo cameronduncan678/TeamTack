@@ -22,18 +22,18 @@
         <form class="col">
           <div>
             <div class="input-field">
-              <input type="text" placeholder="First Name" v-model="addFName" />
+              <input type="text" name="addFName" placeholder="First Name" v-model="addFName" />
             </div>
             <div class="input-field">
-              <input type="text" placeholder="Last Name" v-model="addLName" />
+              <input type="text" name="addLName" placeholder="Last Name" v-model="addLName" />
             </div>
           </div>
           <div class>
             <div class="input-field">
-              <input type="email" placeholder="email" v-model="addEmail" />
+              <input type="email" name="addEmail" placeholder="email" v-model="addEmail" />
             </div>
             <div class="input-field">
-              <input type="text" placeholder="phone" v-model="addPhone" />
+              <input type="text" name="addPhone" placeholder="phone" v-model="addPhone" />
             </div>
             <div class="input-field">
               <input type="upload" />
@@ -55,9 +55,18 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SideBar",
+  data() {
+    return {
+      addFName: null,
+      addLName: null,
+      addEmail: null,
+      addPhone: null,
+    };
+  },
   components: {
     CardSidebar,
   },
+
   methods: {
     ...mapActions(["fetchMembers", "addMember"]),
     addMemberShow() {
@@ -69,18 +78,16 @@ export default {
     addNewTeamMember(e) {
       e.preventDefault;
 
-      if (this.addFName && this.addLName && this.addEmail && this.addPhone) {
-        this.addMember({
-          name: {
-            firstname: this.addFName,
-            lastname: this.addLName,
-          },
-          email: this.addEmail,
-          phone: this.addPhone,
-          imageurl: "",
-          project: "",
-        });
-      }
+      this.addMember({
+        name: {
+          firstname: this.addFName,
+          lastname: this.addLName,
+        },
+        email: this.addEmail,
+        phone: this.addPhone,
+        imageurl: "",
+        project: "",
+      });
 
       this.addMemberHide();
     },

@@ -17,15 +17,15 @@
               <div class="input-field col s6 cyan">
                 <input
                   type="text"
-                  :placeholder="getMemberEdit.data.name.firstname"
-                  :value="getMemberEdit.data.name.firstname"
+                  placeholder="First Name"
+                  v-model="getMemberEdit.data.name.firstname"
                 />
               </div>
               <div class="input-field col s6 cyan">
                 <input
                   type="text"
                   placeholder="Last Name"
-                  :value="getMemberEdit.data.name.lastname"
+                  v-model="getMemberEdit.data.name.lastname"
                 />
               </div>
             </div>
@@ -34,19 +34,19 @@
                 <input
                   type="email"
                   placeholder="email@address.com"
-                  :value="getMemberEdit.data.email"
+                  v-model="getMemberEdit.data.email"
                 />
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12 cyan">
-                <input type="text" placeholder="Phone Number" :value="getMemberEdit.data.phone" />
+                <input type="text" placeholder="Phone Number" v-model="getMemberEdit.data.phone" />
               </div>
             </div>
           </form>
         </div>
         <div class="col">
-          <button class="tm-btn btn cyan">
+          <button @click="memberEditShow" class="tm-btn btn cyan">
             <i class="far fa-edit"></i>
           </button>
           <button @click="memberDelShow" class="tm-btn btn red">
@@ -55,6 +55,13 @@
         </div>
       </div>
     </div>
+    <modal name="edit-member-modal">
+      <div class="deleteModalContent">
+        <h5>Are you sure you want to Edit: {{getMemberEdit.data.name.firstname}}</h5>
+        <button @click="updateMember(getMemberEdit.ID)" class="btn-large cyan">Yes</button>
+        <button @click="memberEditHide" class="btn-large red">No</button>
+      </div>
+    </modal>
     <modal name="delete-member-modal" class="modalBG">
       <div class="deleteModalContent">
         <h5>Are you sure you want to delete: {{getMemberEdit.data.name.firstname}}</h5>
@@ -77,18 +84,42 @@ export default {
     ...mapGetters(["getMemberEdit"]),
   },
   methods: {
-    ...mapActions(["deleteMember", "fetchMembers"]),
+    ...mapActions(["deleteMember", "fetchMembers", "editMember"]),
     memberDelShow() {
       this.$modal.show("delete-member-modal");
     },
     memberDelHide() {
       this.$modal.hide("delete-member-modal");
     },
+    memberEditShow() {
+      this.$modal.show("edit-member-modal");
+    },
+    memberEditHide() {
+      this.$modal.hide("edit-member-modal");
+    },
     deleteCurrentMember(id) {
       this.deleteMember(id);
       this.fetchMembers();
 
       this.memberDelHide();
+    },
+    updateMember(id) {
+      var data = {
+        name: {
+          firstname: this.getMemberEdit.data.name.firstname,
+          lastname: this.getMemberEdit.data.name.lastname,
+        },
+        email: this.getMemberEdit.data.email,
+        phone: this.getMemberEdit.data.phone,
+        imageurl: "",
+        project: "",
+      };
+
+      var parameterArray = [id, data];
+      this.editMember(parameterArray);
+
+      this.fetchMembers();
+      this.memberEditHide();
     },
   },
 };

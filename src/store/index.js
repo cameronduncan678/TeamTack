@@ -15,6 +15,7 @@ export default new Vuex.Store({
     placeholderIMG:
       "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
     memberEdit: {
+      ID: "00000",
       data: {
         name: {
           firstname: "Firstname",
@@ -134,6 +135,17 @@ export default new Vuex.Store({
         console.error(err);
       }
 
+      commit("emptyCommit");
+    },
+    //--- Edit Team Member
+    editMember({ commit }, arr) {
+      try {
+        db.collection(membersCollection)
+          .doc(arr[0])
+          .update(arr[1]);
+      } catch (err) {
+        console.error(err);
+      }
       commit("emptyCommit");
     }
   }

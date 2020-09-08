@@ -55,6 +55,14 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SideBarManager",
+  data() {
+    return {
+      addFName: null,
+      addLName: null,
+      addEmail: null,
+      addPhone: null,
+    };
+  },
   components: {
     CardSidebarMan,
   },

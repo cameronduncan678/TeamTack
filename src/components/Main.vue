@@ -14,7 +14,26 @@ export default {
     ...mapActions(["fetchProjects"]),
   },
   computed: {
-    ...mapGetters(["allProjects"]),
+    ...mapGetters(["allProjects", "getTeam"]),
+    filterData() {
+      var projects = this.allProjects();
+      var team = this.getTeam();
+
+      var DataModel = { projectDoc: null, teamMembers: [] };
+      var DataModelArray = [];
+
+      projects.forEach((proj) => {
+        DataModel.projectDoc = proj;
+
+        team.forEach((member) => {
+          if (member.data.project == proj.data.project) {
+            DataModel.teamMembers.push(member);
+          }
+        });
+      });
+
+      return DataModelArray;
+    },
   },
   created() {
     this.fetchProjects();

@@ -29,7 +29,11 @@
           </modal>
         </div>
         <div class="tt-project-col-teamlist">
-          <draggable :list="proj.teamMembers" group="teamDrag" @change="log">
+          <draggable
+            :list="proj.teamMembers"
+            group="teamDrag"
+            @change="updateProject($event, proj.projectDoc.data.project)"
+          >
             <div v-for="(member, index) in proj.teamMembers" :key="index">
               <TeamCardMain :memberData="member" />
             </div>
@@ -119,7 +123,8 @@ export default {
       "fetchProjects",
       "deleteProject",
       "addProject",
-      "editMember"
+      "editMember",
+      "fetchMembers"
     ]),
     deleteCol(id, membersArr) {
       this.revertMembersToNull(membersArr);
@@ -167,8 +172,16 @@ export default {
 
       this.projectName = null;
     },
-    log: function(evt) {
-      window.console.log(evt);
+    updateProject(evt, project) {
+      if (evt.added) {
+        var id = evt.added.element.ID;
+        var data = evt.added.element.data;
+        data.project = project;
+        var updateArr = [id, data];
+        this.editMember(updateArr);
+        this.fetchMembers();
+        this.fetchProjects();
+      }
     }
   }
 };

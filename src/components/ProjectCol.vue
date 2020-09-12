@@ -1,7 +1,11 @@
 <template>
   <div class="tt-project-section">
     <!--Project Column-->
-    <span v-for="(proj, index) in filterData" :key="index" class="tt-project-col">
+    <span
+      v-for="(proj, index) in filterData"
+      :key="index"
+      class="tt-project-col"
+    >
       <div class="tt-project-col-container">
         <div class="tt-project-col-title">
           {{ proj.projectDoc.data.project }}
@@ -14,15 +18,22 @@
           <modal name="delete-modal" class="modalBG">
             <div class="deleteModalContent">
               <h5>Are you sure you want to delete this Project?</h5>
-              <button @click="deleteCol(storeID, storeTeamMembers)" class="btn-large cyan">Yes</button>
+              <button
+                @click="deleteCol(storeID, storeTeamMembers)"
+                class="btn-large cyan"
+              >
+                Yes
+              </button>
               <button @click="delHide" class="btn-large red">No</button>
             </div>
           </modal>
         </div>
         <div class="tt-project-col-teamlist">
-          <div v-for="(member, index) in proj.teamMembers" :key="index">
-            <TeamCardMain :memberData="member" />
-          </div>
+          <draggable :list="proj.teamMembers" group="teamDrag" @change="log">
+            <div v-for="(member, index) in proj.teamMembers" :key="index">
+              <TeamCardMain :memberData="member" />
+            </div>
+          </draggable>
         </div>
       </div>
     </span>
@@ -61,17 +72,19 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import TeamCardMain from "./TeamCardMain";
+import draggable from "vuedraggable";
 
 export default {
   name: "ProjectCol",
   components: {
     TeamCardMain,
+    draggable
   },
   data() {
     return {
       storeID: null,
       storeTeamMembers: null,
-      projectName: null,
+      projectName: null
     };
   },
   props: ["projData"],
@@ -83,11 +96,11 @@ export default {
       var team = this.getTeam;
 
       var DataModelArray = [];
-      projects.forEach((proj) => {
+      projects.forEach(proj => {
         var DataModel = { projectDoc: null, teamMembers: [] };
 
         var arr = [];
-        team.forEach((member) => {
+        team.forEach(member => {
           if (member.data.project != "") {
             if (member.data.project == proj.data.project) {
               arr.push(member);
@@ -99,14 +112,14 @@ export default {
         DataModelArray.push(DataModel);
       });
       return DataModelArray;
-    },
+    }
   },
   methods: {
     ...mapActions([
       "fetchProjects",
       "deleteProject",
       "addProject",
-      "editMember",
+      "editMember"
     ]),
     deleteCol(id, membersArr) {
       this.revertMembersToNull(membersArr);
@@ -121,13 +134,13 @@ export default {
       if (this.projectName) {
         const newProj = this.projectName;
         this.addProject({
-          project: newProj,
+          project: newProj
         });
         this.addHide();
       }
     },
     revertMembersToNull(membersArr) {
-      membersArr.forEach((member) => {
+      membersArr.forEach(member => {
         member.data.project = "";
 
         var parameterArray = [member.ID, member.data];
@@ -154,7 +167,10 @@ export default {
 
       this.projectName = null;
     },
-  },
+    log: function(evt) {
+      window.console.log(evt);
+    }
+  }
 };
 </script>
 

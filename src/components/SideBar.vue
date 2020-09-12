@@ -2,9 +2,11 @@
   <div class="tt-sidebar cyan lighten-4">
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
-      <div v-for="(member, index) in getTeam" :key="index">
-        <CardSidebar :memberData="member" v-if="member.data.project == ''" />
-      </div>
+      <draggable :list="getTeam" group="teamDrag" @change="log">
+        <div v-for="(member, index) in getTeam" :key="index">
+          <CardSidebar :memberData="member" v-if="member.data.project == ''" />
+        </div>
+      </draggable>
       <div class="add-member-btn">
         <button @click="addMemberShow" class="btn cyan">
           <i class="fas fa-plus"></i>
@@ -16,24 +18,49 @@
         <i class="fas fa-users-cog"></i>
       </router-link>
     </div>
-    <modal id="add-member" name="add-member-modal" height="auto" class="modalBG">
+    <modal
+      id="add-member"
+      name="add-member-modal"
+      height="auto"
+      class="modalBG"
+    >
       <div class="container">
         <h5 style="text-align:center; margin-top:40px;">Add new TeamMember</h5>
         <form class="col">
           <div>
             <div class="input-field">
-              <input type="text" name="addFName" placeholder="First Name" v-model="addFName" />
+              <input
+                type="text"
+                name="addFName"
+                placeholder="First Name"
+                v-model="addFName"
+              />
             </div>
             <div class="input-field">
-              <input type="text" name="addLName" placeholder="Last Name" v-model="addLName" />
+              <input
+                type="text"
+                name="addLName"
+                placeholder="Last Name"
+                v-model="addLName"
+              />
             </div>
           </div>
           <div class>
             <div class="input-field">
-              <input type="email" name="addEmail" placeholder="email" v-model="addEmail" />
+              <input
+                type="email"
+                name="addEmail"
+                placeholder="email"
+                v-model="addEmail"
+              />
             </div>
             <div class="input-field">
-              <input type="text" name="addPhone" placeholder="phone" v-model="addPhone" />
+              <input
+                type="text"
+                name="addPhone"
+                placeholder="phone"
+                v-model="addPhone"
+              />
             </div>
             <div class="input-field">
               <input type="upload" />
@@ -41,7 +68,9 @@
           </div>
         </form>
         <div style="text-align:center; margin-bottom:40px; margin-top:20px;">
-          <button @click="addNewTeamMember" class="btn-large cyan">Add Member</button>
+          <button @click="addNewTeamMember" class="btn-large cyan">
+            Add Member
+          </button>
           <button @click="addMemberHide" class="btn-large red">Cancel</button>
         </div>
       </div>
@@ -52,6 +81,7 @@
 <script>
 import CardSidebar from "./TeamCardSB";
 import { mapGetters, mapActions } from "vuex";
+import draggable from "vuedraggable";
 
 export default {
   name: "SideBar",
@@ -60,11 +90,12 @@ export default {
       addFName: null,
       addLName: null,
       addEmail: null,
-      addPhone: null,
+      addPhone: null
     };
   },
   components: {
     CardSidebar,
+    draggable
   },
 
   methods: {
@@ -81,26 +112,29 @@ export default {
       this.addMember({
         name: {
           firstname: this.addFName,
-          lastname: this.addLName,
+          lastname: this.addLName
         },
         email: this.addEmail,
         phone: this.addPhone,
         imageurl: "",
-        project: "",
+        project: ""
       });
 
       this.addMemberHide();
     },
+    log: function(evt) {
+      window.console.log(evt);
+    }
   },
   computed: {
-    ...mapGetters(["getTeam"]),
+    ...mapGetters(["getTeam"])
   },
   created() {
     this.fetchMembers();
   },
   updated() {
     this.fetchMembers();
-  },
+  }
 };
 </script>
 

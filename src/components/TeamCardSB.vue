@@ -4,7 +4,7 @@
       <img class="card-sidebar-photo" v-bind:src="checkImageURL()" />
       <div class="card-sidebar-icons">
         <i class="far fa-envelope"></i>
-        <i class="fas fa-phone-alt"></i>
+        <i class="fas fa-phone-alt" @click="copyNumber(memberData.data.phone)"></i>
       </div>
     </div>
   </div>
@@ -27,6 +27,11 @@ export default {
       } else {
         return imageURL;
       }
+    },
+    copyNumber(number) {
+      navigator.clipboard.writeText(number).then(() => {
+        alert("Phone Number Copied");
+      });
     },
   },
 };

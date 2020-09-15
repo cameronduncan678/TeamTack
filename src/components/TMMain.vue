@@ -56,14 +56,14 @@
       </div>
     </div>
     <modal name="edit-member-modal">
-      <div class="deleteModalContent">
+      <div class="deleteModalContent center">
         <h5>Are you sure you want to Edit: {{getMemberEdit.data.name.firstname}}</h5>
         <button @click="updateMember(getMemberEdit.ID)" class="btn-large cyan">Yes</button>
         <button @click="memberEditHide" class="btn-large red">No</button>
       </div>
     </modal>
     <modal name="delete-member-modal" class="modalBG">
-      <div class="deleteModalContent">
+      <div class="deleteModalContent center">
         <h5>Are you sure you want to delete: {{getMemberEdit.data.name.firstname}}</h5>
         <button @click="deleteCurrentMember(getMemberEdit.ID)" class="btn-large cyan">Yes</button>
         <button @click="memberDelHide" class="btn-large red">No</button>

@@ -9,7 +9,7 @@
         <div class="detail-icons">
           <div class="detail-icons-icon">
             <i class="far fa-envelope"></i>
-            <i class="fas fa-phone-alt"></i>
+            <i class="fas fa-phone-alt" @click="copyNumber(memberData.data.phone)"></i>
           </div>
         </div>
         <div class="detail-footer"></div>
@@ -50,6 +50,11 @@ export default {
         return imageURL;
       }
     },
+    copyNumber(number) {
+      navigator.clipboard.writeText(number).then(() => {
+        alert("Phone Number Copied");
+      });
+    },
   },
 };
 </script>
@@ -88,6 +93,9 @@ export default {
   font-size: 25px;
   border-top: solid 1px;
   padding-top: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .detail-icons {

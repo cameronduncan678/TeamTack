@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="tt-TeamCard-Main cyan lighten-5">
-      <div class="tt-TeamCard-Main-port">
-        <img class="tt-TeamCard-Main-port-img" :src="checkImageURL()" />
-      </div>
       <div class="tt-TeamCard-Main-det">
-        <p class="detail-name">{{fullName}}</p>
+        <p class="detail-name">
+          <i class="far fa-user"></i>
+          {{fullName}}
+        </p>
         <div class="detail-icons">
           <div class="detail-icons-icon">
             <i class="far fa-envelope"></i>
@@ -40,16 +40,6 @@ export default {
     hide() {
       this.$modal.hide("deleteTeamMain");
     },
-    checkImageURL() {
-      const imageURL = this.memberData.data.imageurl;
-      const placeholderIMG = this.getPlaceholder();
-
-      if (imageURL == "") {
-        return placeholderIMG;
-      } else {
-        return imageURL;
-      }
-    },
     copyNumber(number) {
       navigator.clipboard.writeText(number).then(() => {
         alert("Phone Number Copied");
@@ -67,22 +57,8 @@ export default {
   box-shadow: 5px 5px 9px #d9e2e4;
 }
 
-.tt-TeamCard-Main-port {
-  width: 50%;
-  height: 100%;
-  float: left;
-}
-
-.tt-TeamCard-Main-port-img {
-  height: 90%;
-  width: 95%;
-  margin-top: 5%;
-  float: right;
-  object-fit: cover;
-}
-
 .tt-TeamCard-Main-det {
-  width: 50%;
+  width: 100%;
   height: 90%;
   float: left;
   margin-top: 2.5%;
@@ -104,7 +80,6 @@ export default {
 }
 
 .detail-icons-icon {
-  padding: 10px;
   font-size: 250%;
 }
 

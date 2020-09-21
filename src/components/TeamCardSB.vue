@@ -1,10 +1,8 @@
 <template>
   <div class="Card-SideBar cyan lighten-5">
     <div class="card-sidebar-content">
-      <img class="card-sidebar-photo" v-bind:src="checkImageURL()" />
       <div class="card-sidebar-icons">
-        <i class="far fa-envelope"></i>
-        <i class="fas fa-phone-alt" @click="copyNumber(memberData.data.phone)"></i>
+        <p>{{fullName}}</p>
       </div>
     </div>
   </div>
@@ -16,18 +14,16 @@ import { mapGetters } from "vuex";
 export default {
   name: "CardSidebar",
   props: ["memberData"],
+  data() {
+    return {
+      fullName:
+        this.memberData.data.name.firstname +
+        " " +
+        this.memberData.data.name.lastname,
+    };
+  },
   methods: {
     ...mapGetters(["getPlaceholder"]),
-    checkImageURL() {
-      const imageURL = this.memberData.data.imageurl;
-      const placeholderIMG = this.getPlaceholder();
-
-      if (imageURL == "") {
-        return placeholderIMG;
-      } else {
-        return imageURL;
-      }
-    },
     copyNumber(number) {
       navigator.clipboard.writeText(number).then(() => {
         alert("Phone Number Copied");

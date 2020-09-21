@@ -12,8 +12,6 @@ export default new Vuex.Store({
   state: {
     projects: [],
     teamMembers: [],
-    placeholderIMG:
-      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
     memberEdit: {
       ID: "00000",
       data: {
@@ -23,8 +21,6 @@ export default new Vuex.Store({
         },
         email: "email",
         phone: "phone",
-        imageurl:
-          "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
         project: ""
       }
     }

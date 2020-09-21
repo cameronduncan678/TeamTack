@@ -1,7 +1,7 @@
 <template>
   <div class="Card-SideBar cyan lighten-5">
     <div class="card-sidebar-content">
-      <img class="card-sidebar-photo" v-bind:src="checkImageURL()" />
+      <p class="detail-name">{{fullName}}</p>
       <div class="card-Manager-icons">
         <i class="fas fa-cog" @click="storeMemberData(memberData)"></i>
       </div>
@@ -15,6 +15,14 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "CardSidebarMan",
   props: ["memberData"],
+  data() {
+    return {
+      fullName:
+        this.memberData.data.name.firstname +
+        " " +
+        this.memberData.data.name.lastname,
+    };
+  },
   methods: {
     ...mapGetters(["getPlaceholder"]),
     ...mapActions(["fetchMember"]),

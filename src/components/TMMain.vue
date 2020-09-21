@@ -3,14 +3,6 @@
     <h4 class="tm-header white-text">Team Manager</h4>
     <div class="tm-container">
       <div class="row">
-        <div class="col tm-photo-section">
-          <div class="tm-photo">
-            <img class="tm-photo-photo" :src="getMemberEdit.data.imageurl" />
-            <div class="tm-photo-btn">
-              <button class="btn">Upload Image</button>
-            </div>
-          </div>
-        </div>
         <div class="col">
           <form class="col s12">
             <div class="row">

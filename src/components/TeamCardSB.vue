@@ -1,9 +1,8 @@
 <template>
   <div class="Card-SideBar cyan lighten-5">
     <div class="card-sidebar-content">
-      <div class="card-sidebar-icons">
-        <p>{{fullName}}</p>
-      </div>
+      <i class="far fa-user"></i>
+      {{ fullName }}
     </div>
   </div>
 </template>
@@ -36,37 +35,20 @@ export default {
 <style>
 .Card-SideBar {
   width: 85%;
-  height: 120px;
+  height: 80px;
   margin: 10% auto;
-  padding: 3%;
+  padding: 10px;
   box-shadow: 5px 5px 9px #5a9999;
 }
 
 .card-sidebar-content {
-  width: 98%;
-  height: 95%;
-  margin: 0 auto;
-  padding: 5px;
-  border-top: solid 1px;
-  border-bottom: solid 1px;
-}
-
-.card-sidebar-photo {
-  width: 60%;
-  height: 100%;
-  object-fit: cover;
-  float: left;
-}
-
-.card-sidebar-icons {
-  float: left;
+  height: 60px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   font-size: 150%;
-}
-
-.card-sidebar-icons i {
-  padding: 25%;
-  display: block;
-  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .sb-card-del {

@@ -82,13 +82,13 @@ export default {
   name: "ProjectCol",
   components: {
     TeamCardMain,
-    draggable
+    draggable,
   },
   data() {
     return {
       storeID: null,
       storeTeamMembers: null,
-      projectName: null
+      projectName: null,
     };
   },
   props: ["projData"],
@@ -100,11 +100,11 @@ export default {
       var team = this.getTeam;
 
       var DataModelArray = [];
-      projects.forEach(proj => {
+      projects.forEach((proj) => {
         var DataModel = { projectDoc: null, teamMembers: [] };
 
         var arr = [];
-        team.forEach(member => {
+        team.forEach((member) => {
           if (member.data.project != "") {
             if (member.data.project == proj.data.project) {
               arr.push(member);
@@ -116,7 +116,7 @@ export default {
         DataModelArray.push(DataModel);
       });
       return DataModelArray;
-    }
+    },
   },
   methods: {
     ...mapActions([
@@ -124,7 +124,7 @@ export default {
       "deleteProject",
       "addProject",
       "editMember",
-      "fetchMembers"
+      "fetchMembers",
     ]),
     deleteCol(id, membersArr) {
       this.revertMembersToNull(membersArr);
@@ -139,13 +139,13 @@ export default {
       if (this.projectName) {
         const newProj = this.projectName;
         this.addProject({
-          project: newProj
+          project: newProj,
         });
         this.addHide();
       }
     },
     revertMembersToNull(membersArr) {
-      membersArr.forEach(member => {
+      membersArr.forEach((member) => {
         member.data.project = "";
 
         var parameterArray = [member.ID, member.data];
@@ -172,18 +172,16 @@ export default {
 
       this.projectName = null;
     },
-    updateProject(evt, project) {
+    async updateProject(evt, project) {
       if (evt.added) {
         var id = evt.added.element.ID;
         var data = evt.added.element.data;
         data.project = project;
         var updateArr = [id, data];
-        this.editMember(updateArr);
-        this.fetchMembers();
-        this.fetchProjects();
+        await this.editMember(updateArr);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -193,7 +191,7 @@ export default {
 }
 
 .tt-project-col {
-  width: 40%;
+  width: 500px;
   height: 100%;
   border-right: solid #d1d1d1;
   border-left: solid #d1d1d1;

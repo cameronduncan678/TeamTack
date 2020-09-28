@@ -4,12 +4,15 @@
       <div class="tt-TeamCard-Main-det">
         <p class="detail-name">
           <i class="far fa-user"></i>
-          {{fullName}}
+          {{ fullName }}
         </p>
         <div class="detail-icons">
           <div class="detail-icons-icon">
             <i class="far fa-envelope"></i>
-            <i class="fas fa-phone-alt" @click="copyNumber(memberData.data.phone)"></i>
+            <i
+              class="fas fa-phone-alt"
+              @click="copyNumber(memberData.data.phone)"
+            ></i>
           </div>
         </div>
         <div class="detail-footer"></div>
@@ -52,7 +55,7 @@ export default {
 <style>
 .tt-TeamCard-Main {
   width: 95%;
-  height: 200px;
+  height: 150px;
   margin-bottom: 50px;
   box-shadow: 5px 5px 9px #d9e2e4;
 }
@@ -72,11 +75,16 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  padding-left: 2.5%;
+}
+
+.detail-name i {
+  font-size: 150%;
 }
 
 .detail-icons {
   height: 50%;
-  margin-top: 10%;
+  margin-top: 10px;
 }
 
 .detail-icons-icon {

@@ -34,7 +34,7 @@
             group="teamDrag"
             @change="updateProject($event, proj.projectDoc.data.project)"
           >
-            <div v-for="(member, index) in proj.teamMembers" :key="index">
+            <div v-for="member in proj.teamMembers" :key="member.ID">
               <TeamCardMain :memberData="member" />
             </div>
           </draggable>

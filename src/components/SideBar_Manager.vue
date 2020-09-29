@@ -2,7 +2,7 @@
   <div class="tt-sidebar cyan lighten-4">
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
-      <div v-for="(member, index) in getTeam" :key="index">
+      <div v-for="member in getTeam" :key="member.ID">
         <CardSidebarMan :memberData="member" />
       </div>
       <div class="add-member-btn">
@@ -16,9 +16,14 @@
         <i class="fas fa-backspace"></i>
       </router-link>
     </div>
-    <modal id="add-member" name="add-member-modal" height="auto" class="modalBG">
+    <modal
+      id="add-member"
+      name="add-member-modal"
+      height="auto"
+      class="modalBG"
+    >
       <div class="container">
-        <h5 style="text-align:center; margin-top:40px;">Add new TeamMember</h5>
+        <h5 style="text-align: center; margin-top: 40px">Add new TeamMember</h5>
         <form class="col">
           <div>
             <div class="input-field">
@@ -40,8 +45,10 @@
             </div>
           </div>
         </form>
-        <div style="text-align:center; margin-bottom:40px; margin-top:20px;">
-          <button @click="addNewTeamMember" class="btn-large cyan">Add Member</button>
+        <div style="text-align: center; margin-bottom: 40px; margin-top: 20px">
+          <button @click="addNewTeamMember" class="btn-large cyan">
+            Add Member
+          </button>
           <button @click="addMemberHide" class="btn-large red">Cancel</button>
         </div>
       </div>

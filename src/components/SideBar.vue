@@ -18,29 +18,56 @@
         <i class="fas fa-users-cog"></i>
       </router-link>
     </div>
-    <modal id="add-member" name="add-member-modal" height="auto" class="modalBG">
+    <modal
+      id="add-member"
+      name="add-member-modal"
+      height="auto"
+      class="modalBG"
+    >
       <div class="container">
-        <h5 style="text-align:center; margin-top:40px;">Add new TeamMember</h5>
+        <h5 style="text-align: center; margin-top: 40px">Add new TeamMember</h5>
         <form class="col">
           <div>
             <div class="input-field">
-              <input type="text" name="addFName" placeholder="First Name" v-model="addFName" />
+              <input
+                type="text"
+                name="addFName"
+                placeholder="First Name"
+                v-model="addFName"
+              />
             </div>
             <div class="input-field">
-              <input type="text" name="addLName" placeholder="Last Name" v-model="addLName" />
+              <input
+                type="text"
+                name="addLName"
+                placeholder="Last Name"
+                v-model="addLName"
+              />
             </div>
           </div>
           <div class>
             <div class="input-field">
-              <input type="email" name="addEmail" placeholder="email" v-model="addEmail" />
+              <input
+                type="email"
+                name="addEmail"
+                placeholder="email"
+                v-model="addEmail"
+              />
             </div>
             <div class="input-field">
-              <input type="text" name="addPhone" placeholder="phone" v-model="addPhone" />
+              <input
+                type="text"
+                name="addPhone"
+                placeholder="phone"
+                v-model="addPhone"
+              />
             </div>
           </div>
         </form>
-        <div style="text-align:center; margin-bottom:40px; margin-top:20px;">
-          <button @click="addNewTeamMember" class="btn-large cyan">Add Member</button>
+        <div style="text-align: center; margin-bottom: 40px; margin-top: 20px">
+          <button @click="addNewTeamMember" class="btn-large cyan">
+            Add Member
+          </button>
           <button @click="addMemberHide" class="btn-large red">Cancel</button>
         </div>
       </div>
@@ -92,7 +119,7 @@ export default {
       this.addMemberHide();
     },
     log: function (evt) {
-      window.console.log(evt);
+      //window.console.log(evt);
     },
   },
   computed: {

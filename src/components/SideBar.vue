@@ -3,7 +3,7 @@
     <h4 class="sidebar-title">Team</h4>
     <div class="team-list-sidebar">
       <draggable :list="getTeam" group="teamDrag" @change="log">
-        <div v-for="(member, index) in getTeam" :key="index">
+        <div v-for="member in getTeam" :key="member.ID">
           <CardSidebar :memberData="member" v-if="member.data.project == ''" />
         </div>
       </draggable>

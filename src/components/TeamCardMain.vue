@@ -8,7 +8,10 @@
         </p>
         <div class="detail-icons">
           <div class="detail-icons-icon">
-            <i class="far fa-envelope"></i>
+            <i
+              class="far fa-envelope"
+              @click="copyEmail(memberData.data.email)"
+            ></i>
             <i
               class="fas fa-phone-alt"
               @click="copyNumber(memberData.data.phone)"
@@ -46,6 +49,11 @@ export default {
     copyNumber(number) {
       navigator.clipboard.writeText(number).then(() => {
         alert("Phone Number Copied");
+      });
+    },
+    copyEmail(email) {
+      navigator.clipboard.writeText(email).then(() => {
+        alert("Email Address Copied");
       });
     },
   },

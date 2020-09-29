@@ -5,7 +5,7 @@
       <div v-for="member in getTeam" :key="member.ID">
         <CardSidebarMan :memberData="member" />
       </div>
-      <div class="add-member-btn">
+      <div class="add-member-btn-man">
         <button @click="addMemberShow" class="btn cyan">
           <i class="fas fa-plus"></i>
         </button>
@@ -174,5 +174,16 @@ export default {
 
 .team-manager-btn button {
   width: 30%;
+}
+
+.add-member-btn-man {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.add-member-btn-man button {
+  width: 30%;
+  height: 60px;
+  margin-top: 5px;
 }
 </style>
